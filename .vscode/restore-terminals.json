@@ -1,0 +1,58 @@
+{
+  "artificialDelayMilliseconds": 700,
+  "keepExistingTerminalsOpen": false,
+  "runOnStartup": false,
+  "terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "Frontend",
+          "commands": [
+            "cd .\\frontend\\",
+            "clear"
+          ]
+        },
+        {
+          "name": "Business-tier",
+          "commands": [
+            "cd .\\business-tier\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "Theia Containers",
+          "commands": [
+            "cd .\\fdg-ui\\dev\\ ",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "Logstash",
+          "commands": [
+            "cd .\\fmc-logstash\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "Terminal",
+          "commands": [
+            ".\\restore-terminal-icons.ps1",
+            "clear"
+          ]
+        }
+      ]
+    }
+  ]
+}

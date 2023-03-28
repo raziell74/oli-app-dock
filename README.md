@@ -1,6 +1,6 @@
 # OLI App Dock
 This repository holds docker compositions and deployment files as well as convient shell scripts to make set up and deployment easier.
-There are also several useful shell scripts that will make development easier.
+Several useful shell scripts are also provided that will make managing docker and git sub-modules easier.
 
 ## Prerequisites
 Make sure you have your GitHub account setup with an SSH key and have been added to all the necessary OLI repositories.⋅⋅

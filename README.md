@@ -60,23 +60,23 @@ _<sub>Documentation Last Updated 3-27-2023</sub>_
 There are seperate scripts for both dev and prod. You can find each in their cooresponding directory.
 It is recommended to create an alias in your terminal for each of these for ease of access.
 
-#### Start `.\dev\start.sh <docker-compose args>`
+#### Start `.\docker\dev\start.sh <docker-compose args>`
 Runs docker-compose up to start containers
 Anything you put after the script is passed through to docker-compose as arguments. 
 This way you can specify which profiles or containers you'd like to start or if you'd like to run in detached mode with `-d`.
 
-#### Stop `.\dev\start.sh <docker-compose args>`
+#### Stop `.\docker\dev\start.sh <docker-compose args>`
 Runs docker-compose down to stop containers
 
 Anything you put after the script is passed through to docker-compose as arguments. 
 This way you can specify which profiles or containers you'd like to stop.
 
-#### Restart `.\dev\restart.sh <docker-compose args>`
+#### Restart `.\docker\dev\restart.sh <docker-compose args>`
 Short cut to run the Stop script followed by the Start script.
 
 Anything you put after the script is passed through to the stop and start scripts to be used in their respective docker-compose scripts
 
-#### Restart Prune `.\dev\restart-prune.sh`
+#### Restart Prune `.\docker\dev\restart-prune.sh`
 This is a debugging script in case there are any major issues and you need to start the app completely fresh. 
 Meant as a complete reset of the entire stack this process takes awhile to complete. 
 

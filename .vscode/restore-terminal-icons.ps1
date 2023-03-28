@@ -1,21 +1,34 @@
 # Uses windows forms to send keystrokes to customize vscode Terminals, sets icons from the bottom up
-Add-Type -AssemblyName System.Windows.Forms$tabDelay = .6
+Add-Type -AssemblyName System.Windows.Forms
+$tabDelay = .6
 
 # Terminal 
 [System.Windows.Forms.SendKeys]::SendWait("^+%cRed~^+%iterminal-powershell~")
 
-# Logstash
+# Oli Dock
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
-[System.Windows.Forms.SendKeys]::SendWait("^+%cYellow~^+%iArchive~")
+[System.Windows.Forms.SendKeys]::SendWait("^+%cMagenta~^+%iPlay~")
 
-# Theia Containers
+# [App] Inspector
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
-[System.Windows.Forms.SendKeys]::SendWait("^+%cMagenta~^+%ivm-running~")
+[System.Windows.Forms.SendKeys]::SendWait("^+%cYellow~^+%iNotebook~")
 
-# Business-tier
+# [App] HomeOwner
+[System.Windows.Forms.SendKeys]::SendWait("%{LEFT}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cBlue~^+%iHome~")
+
+# [BE] Core
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
 [System.Windows.Forms.SendKeys]::SendWait("^+%cCyan~^+%irepo-delete~")
 
-# Frontend
+# [FE] Platform
 [System.Windows.Forms.SendKeys]::SendWait("%{LEFT}"); Start-Sleep -s $tabDelay
 [System.Windows.Forms.SendKeys]::SendWait("^+%cGreen~^+%iorganization~")
+
+# [BE] AI Assist
+[System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cYellow~^+%ilightbulb-autofix~")
+
+# [FE] Marketing
+[System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cGreen~^+%izap~")

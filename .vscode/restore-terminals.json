@@ -6,16 +6,38 @@
     {
       "splitTerminals": [
         {
-          "name": "Frontend",
+          "name": "[FE] Marketing",
           "commands": [
-            "cd .\\frontend\\",
+            "cd .\\frontend\\marketing\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "[BE] AI Assist",
+          "commands": [
+            "cd .\\backend\\ai-assist\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "[FE] Platform",
+          "commands": [
+            "cd .\\frontend\\platform\\",
             "clear"
           ]
         },
         {
-          "name": "Business-tier",
+          "name": "[BE] Core",
           "commands": [
-            "cd .\\business-tier\\",
+            "cd .\\backend\\core\\",
             "clear"
           ]
         }
@@ -24,9 +46,16 @@
     {
       "splitTerminals": [
         {
-          "name": "Theia Containers",
+          "name": "[App] HomeOwner",
           "commands": [
-            "cd .\\fdg-ui\\dev\\ ",
+            "cd .\\mobile\\home-owner\\",
+            "clear"
+          ]
+        },
+        {
+          "name": "[App] Inspector",
+          "commands": [
+            "cd .\\mobile\\inspector\\",
             "clear"
           ]
         }
@@ -35,9 +64,9 @@
     {
       "splitTerminals": [
         {
-          "name": "Logstash",
+          "name": "Oli Dock",
           "commands": [
-            "cd .\\fmc-logstash\\",
+            "cd .\\docker\\dev\\",
             "clear"
           ]
         }
@@ -48,8 +77,7 @@
         {
           "name": "Terminal",
           "commands": [
-            ".\\restore-terminal-icons.ps1",
-            "clear"
+            ".\\.vscode\\restore-terminal-icons.ps1"
           ]
         }
       ]

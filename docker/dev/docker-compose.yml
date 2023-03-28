@@ -1,0 +1,168 @@
+version: "3.8"
+
+services:
+  mongo1:
+    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, mongo]
+    image: mongo:6.0
+    container_name: oli-mongo1
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    networks:
+      - dev
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=olidev
+  redis:
+    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, redis]
+    image: redis:6.2
+    container_name: oli-redis
+    networks:
+      - dev
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data/redis
+  backend-core:
+    profiles: [core, marketing, mobile, ai, inspector, home-owner]
+    image: core:dev
+    container_name: oli-backend-core
+    build: ../../backend/core
+    environment:
+      - MONGODB_URL=mongodb://mongo1/
+      - DB_CORE=core
+      - DB_REPORTS=reports
+      - DB_INSPECTORS=inspectors
+    networks:
+      - dev
+    ports: 
+      - 3002:3000
+    volumes:
+      - ./backend/core:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+      - redis
+  backend-inspections:
+    profiles: [core, ai, mobile, inspector]
+    image: inspections:dev
+    container_name: oli-backend-inspections
+    build: ../../backend/inspections
+    environment:
+      - MONGODB_URL=mongodb://mongo1/
+      - DB_CORE=core
+      - DB_REPORTS=reports
+      - DB_INSPECTORS=inspectors
+    networks:
+      - dev
+    ports: 
+      - 3003:3000
+    volumes:
+      - ./backend/inspections:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+      - redis
+  backend-ai-assist:
+    profiles: [core, ai, marketing, mobile, inspector, home-owner]
+    image: ai-assist:dev
+    container_name: oli-backend-ai-assist
+    build: ../../backend/ai-assist
+    environment:
+      - MONGODB_URL=mongodb://mongo1/
+      - DB_CORE=core
+      - DB_REPORTS=reports
+      - DB_INSPECTORS=inspectors
+    networks:
+      - dev
+    ports: 
+      - 3004:3000
+    volumes:
+      - ./backend/ai-assist:/app
+      - /app/node_modules
+    depends_on:
+      - mongo
+      - redis
+  frontend-marketing:
+    profiles: [core, marketing]
+    image: marketing:dev
+    container_name: oli-frontend-marketing
+    build: ../../frontend/marketing
+    environment:
+      - BACKEND_CORE_URL=https://localhost:3002
+    networks:
+      - dev
+    ports: 
+      - 3000:3000
+    volumes:
+      - ./frontend/marketing:/app
+      - /app/node_modules
+    depends_on:
+      - backend-core
+      - backend-ai-assist
+  frontend-platform:
+    profiles: [core]
+    image: platform:dev
+    container_name: oli-frontend-platform
+    build: ../../frontend/platform
+    environment:
+      - BACKEND_CORE_URL=https://localhost:3002
+      - BACKEND_INSPECTIONS_URL=https://localhost:3003
+      - BACKEND_AIASSIST_URL=https://localhost:3004
+    networks:
+      - dev
+    ports: 
+      - 3001:3000
+    volumes:
+      - ./frontend/platform:/app
+      - /app/node_modules
+    depends_on:
+      - backend-core
+      - backend-inspections
+      - backend-ai-assist
+  mobile-inspector:
+    profiles: [mobile, inspector]
+    image: inspector:dev
+    container_name: oli-mobile-inspector
+    build: ../../mobile/inspector
+    environment:
+      - BACKEND_CORE_URL=https://localhost:3002
+      - BACKEND_INSPECTIONS_URL=https://localhost:3003
+      - BACKEND_AIASSIST_URL=https://localhost:3004
+    networks:
+      - dev
+    ports: 
+      - 3005:3000
+    volumes:
+      - ./mobile/inspector:/app
+      - /app/node_modules
+    depends_on:
+      - backend-core
+      - backend-inspections
+      - backend-ai-assist
+  mobile-home-owner:
+    profiles: [mobile, home-owner]
+    image: homeowner:dev
+    container_name: oli-mobile-home-owner
+    build: ../../mobile/home-owner
+    environment:
+      - BACKEND_CORE_URL=https://localhost:3002
+      - BACKEND_INSPECTIONS_URL=https://localhost:3003
+      - BACKEND_AIASSIST_URL=https://localhost:3004
+    networks:
+      - dev
+    ports:
+      - 3006:3000
+    volumes:
+      - ./mobile/home-owner:/app
+      - /app/node_modules
+    depends_on:
+      - backend-core
+      - backend-inspections
+      - backend-ai-assist
+volumes:
+    mongodb_data:
+    redis_data:

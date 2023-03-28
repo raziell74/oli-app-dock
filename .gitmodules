@@ -1,0 +1,21 @@
+[submodule "backend/ai-assist"]
+	path = backend/ai-assist
+	url = git@github.com:raziell74/oli-backend-ai-assist.git
+[submodule "backend/inspections"]
+	path = backend/inspections
+	url = git@github.com:raziell74/oli-backend-inspections.git
+[submodule "backend/core"]
+	path = backend/core
+	url = git@github.com:raziell74/oli-backend-core.git
+[submodule "frontend/marketing"]
+	path = frontend/marketing
+	url = git@github.com:raziell74/oli-marketing.git
+[submodule "frontend/platform"]
+	path = frontend/platform
+	url = git@github.com:raziell74/oli-platform.git
+[submodule "mobile/inspector"]
+	path = mobile/inspector
+	url = git@github.com:raziell74/oli-inspector-app.git
+[submodule "mobile/home-owner"]
+	path = mobile/home-owner
+	url = git@github.com:raziell74/oli-home-owner-app.git

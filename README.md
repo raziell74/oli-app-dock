@@ -1,5 +1,5 @@
 # OLI App Dock
-This repository holds docker compositions and deployment files as well as convient shell scripts to make set up and deployment easier.⋅⋅
+This repository holds docker compositions and deployment files as well as convient shell scripts to make set up and deployment easier.
 There are also several useful shell scripts that will make development easier.
 
 ## Prerequisites

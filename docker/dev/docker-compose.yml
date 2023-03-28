@@ -33,7 +33,7 @@ services:
     container_name: oli-backend-core
     build: ../../backend/core
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=development
       - COREDB_URL=mongodb://mongo1/
       - DB_CORE=core
       - DB_REPORTS=reports
@@ -43,8 +43,8 @@ services:
     ports: 
       - 3002:3000
     volumes:
-      - ./backend/core:/app
-      - /app/node_modules
+      - ./backend/core:/node/app
+      - /node/app/node_modules
     depends_on:
       - mongo
       - redis_db
@@ -54,7 +54,7 @@ services:
     container_name: oli-backend-inspections
     build: ../../backend/inspections
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=development
       - COREDB_URL=mongodb://mongo1/
       - DB_CORE=core
       - DB_REPORTS=reports
@@ -64,8 +64,8 @@ services:
     ports: 
       - 3003:3000
     volumes:
-      - ./backend/inspections:/app
-      - /app/node_modules
+      - ./backend/inspections:/node/app
+      - /node/app/node_modules
     depends_on:
       - mongo
       - redis_db
@@ -75,7 +75,7 @@ services:
     container_name: oli-backend-ai-assist
     build: ../../backend/ai-assist
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=development
       - PORT=3004
       - COREDB_URL=mongodb://mongo1/
       - REDIS_HOST=redis://redis_db
@@ -89,8 +89,8 @@ services:
     ports: 
       - 3004:3000
     volumes:
-      - ./backend/ai-assist:/app
-      - /app/node_modules
+      - ./backend/ai-assist:/node/app
+      - /node/app/node_modules
     depends_on:
       - mongo
       - redis_db
@@ -100,15 +100,15 @@ services:
     container_name: oli-frontend-marketing
     build: ../../frontend/marketing
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=development
       - BACKEND_CORE_URL=https://localhost:3002
     networks:
       - dev
     ports: 
       - 3000:3000
     volumes:
-      - ./frontend/marketing:/app
-      - /app/node_modules
+      - ./frontend/marketing:/node/app
+      - /node/app/node_modules
     depends_on:
       - backend-core
       - backend-ai-assist
@@ -118,7 +118,7 @@ services:
     container_name: oli-frontend-platform
     build: ../../frontend/platform
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=development
       - BACKEND_CORE_URL=https://localhost:3002
       - BACKEND_INSPECTIONS_URL=https://localhost:3003
       - BACKEND_AIASSIST_URL=https://localhost:3004
@@ -127,8 +127,8 @@ services:
     ports: 
       - 3001:3000
     volumes:
-      - ./frontend/platform:/app
-      - /app/node_modules
+      - ./frontend/platform:/node/app
+      - /node/app/node_modules
     depends_on:
       - backend-core
       - backend-inspections
@@ -147,9 +147,9 @@ services:
     ports: 
       - 3005:3000
     volumes:
-      - NODE_ENV=dev
-      - ./mobile/inspector:/app
-      - /app/node_modules
+      - NODE_ENV=development
+      - ./mobile/inspector:/node/app
+      - /node/app/node_modules
     depends_on:
       - backend-core
       - backend-inspections
@@ -160,7 +160,7 @@ services:
     container_name: oli-mobile-home-owner
     build: ../../mobile/home-owner
     environment:
-      - NODE_ENV=dev
+      - NODE_ENV=development
       - BACKEND_CORE_URL=https://localhost:3002
       - BACKEND_INSPECTIONS_URL=https://localhost:3003
       - BACKEND_AIASSIST_URL=https://localhost:3004
@@ -169,8 +169,8 @@ services:
     ports:
       - 3006:3000
     volumes:
-      - ./mobile/home-owner:/app
-      - /app/node_modules
+      - ./mobile/home-owner:/node/app
+      - /node/app/node_modules
     depends_on:
       - backend-core
       - backend-inspections

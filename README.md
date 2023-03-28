@@ -31,6 +31,17 @@ As of the writing of this document we are using node v19.8.1 for all of our code
    - In a terminal navigate to the `<containing directory>\OLI\dev` directory and run `docker-compose up --build`.
    - After the first time bringing the containers up you can leave off the '--build' from the command to bring up the containers quicker.
    - You can also use the `restart.sh` or `start.sh` scripts that are explained lower in this document.
+4. Accessing the various services from the browser. <sub>_You can add an alias to each by editing your hosts file. [How to edit hosts](https://www.hostinger.com/tutorials/how-to-edit-hosts-file)_</sub>
+   - Frontend
+     - Marketing site: http://localhost:3000/
+     - Web Platform: http://localhost:3001/
+   - Backend <sub>To view API documentation replace '/graphql' with '/swagger'</sub>
+     - Core API: http://localhost:3002/graphql
+     - Inspections API: http://localhost:3003/graphql
+     - AI Assistant API: http://localhost:3004/graphql
+   - Mobile <sub>More documentation on how to access apps will be coming later</sub>
+     - Inspector APP: http://localhost:3005/
+     - Home Owner APP: http://localhost:3006/
 
 ## Using Docker
 Due to the micro-service architecture there are a large number of containers, as such the compose yaml defines profiles for each container to help group and catagorize them based off their parts of the application stack.
@@ -45,13 +56,15 @@ As an example you can bring up only the containers for the inspector mobile app 
 You can also run multiple profiles at a time. For instance if you are wanting to run the inspector as well as the core web portal to make sure they interact together correctly `docker-compose --profile inspector --profile core up`
 
 Available OLI Profiles:
-* `core` Containers: mysql, mongo, redis, backend-core, inspection-backend, ai-assistant-backend, web-platform
-* `marketing` Containers: mysql, backend-core, marketing
-* `inspector` Containers: mysql, mongo, redis, backend-core, inspection-backend, ai-assistant-backend, inspector-app
-* `home-owner` Containers: mysql, mongo, redis, backend-core, inspection-backend, ai-assistant-backend, home-owner-app
-* `ai` Containers: redis, ai-assistant-backend
+* `core`
+* `db`
+* `marketing`
+* `mobile`
+* `inspector`
+* `home-owner`
+* `ai`
 
-Please review the `docker-compose.yml` for 100% up to date information profile assignment.
+For exact container profile assignment please refer to the `docker-compose.yml`.
 
 _<sub>Documentation Last Updated 3-27-2023</sub>_
 

@@ -5,7 +5,7 @@ oli_npm_install() {
   echo "Setting up pre-commit hooks..."
   npx husky install
   npx husky add .husky/pre-commit "exec >/dev/tty 2>&1"
-  npx husky add .husky/pre-commit "npx lint-staged"
+  npx husky add .husky/pre-commit "npx lint-staged --verbose"
   echo "Installation complete!\n\n"
   cd $2
 }

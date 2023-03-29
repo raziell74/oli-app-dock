@@ -24,7 +24,8 @@ As of the writing of this document we are using node v19.8.1 for all of our code
    - Clone oli-app-dock into a new folder named 'OLI' on your development machine. 
    - Command: `git clone git@github.com:raziell74/oli-app-dock.git OLI`
 2. Run the dev setup shell script
-   - In a terminal navigate to the newly created OLI directory and run `.\dev-setup.sh`.
+   - In a terminal navigate to the newly created `OLI\docker\dev` directory.
+   - Then run `.\dev-setup.sh`. _<sub>it is important that this script is ran from inside the docker\dev directory</sub>_
    - The script will pull all of the OLI sub-module repositories for the app and initialize each of them by running an `npm install` for each respective repository.
    - This process can take awhile so please wait for it to fully complete.
 3. Launch the docker containers

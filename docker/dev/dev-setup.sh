@@ -10,6 +10,13 @@ oli_npm_install() {
   cd $2
 }
 
+oli_config_submodule() {
+  echo "Configuring Submodule \$0..."
+  git config submodule.$0.branch master
+  git config submodule.$0.ignore dirty
+  echo "Submodule \$0 successfully configured\n\n"
+}
+
 # OLI Dev Environment Setup
 
 echo "Running initial set up of the OLI development environment"
@@ -17,10 +24,18 @@ echo "This process will take several minutes to complete, please be patient"
 echo "\n\n"
 
 # Pull repository submodules
-echo "Pulling Repository Sub-Modules..."
+echo "Pulling Oli Repositories as Submodules..."
 cd ../../
-git pull-all
+git submodule update --init --recursive
 echo "Pull successful!\n\n"
+
+oli_config_submodule backend/ai-assist
+oli_config_submodule backend/inspections
+oli_config_submodule backend/core
+oli_config_submodule frontend/marketing
+oli_config_submodule frontend/platform
+oli_config_submodule mobile/inspector
+oli_config_submodule mobile/home-owner
 
 # Npm Installs
 echo "------------ Staring npm package installation ------------\n\n"

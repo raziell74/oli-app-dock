@@ -64,6 +64,17 @@
     {
       "splitTerminals": [
         {
+          "name": "[BE] Inspections API",
+          "commands": [
+            "cd .\\backend\\inspections\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
           "name": "Oli Dock",
           "commands": [
             "cd .\\docker\\dev\\",

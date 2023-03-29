@@ -2,12 +2,16 @@
 Add-Type -AssemblyName System.Windows.Forms
 $tabDelay = .6
 
-# Terminal 
+# Terminal
 [System.Windows.Forms.SendKeys]::SendWait("^+%cRed~^+%iterminal-powershell~")
 
 # Oli Dock
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
 [System.Windows.Forms.SendKeys]::SendWait("^+%cMagenta~^+%iPlay~")
+
+# [BE] Inspections API
+[System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cCyan~^+%iVerified-filled~")
 
 # [App] Inspector
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay

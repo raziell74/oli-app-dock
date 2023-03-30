@@ -5,7 +5,7 @@ services:
     profiles: [core, db, ai, marketing, mobile, inspector, home-owner, mongo]
     image: mongo:6.0
     container_name: oli-mongo1
-    command: ["--replSet", "rs0", "--bind_ip_all"]
+    hostname: mongo1
     networks:
       - dev
     ports:
@@ -13,9 +13,6 @@ services:
     volumes:
       - mongodb_data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=olidev
   redis_db:
     profiles: [core, db, ai, marketing, mobile, inspector, home-owner, redis]
     image: redis:6.2
@@ -40,13 +37,13 @@ services:
       - DB_INSPECTORS=inspectors
     networks:
       - dev
-    ports: 
+    ports:
       - 3002:3000
     volumes:
       - ./backend/core:/node/app
       - /node/app/node_modules
     depends_on:
-      - mongo
+      - mongo1
       - redis_db
   backend-inspections:
     profiles: [core, ai, mobile, inspector]
@@ -61,13 +58,13 @@ services:
       - DB_INSPECTORS=inspectors
     networks:
       - dev
-    ports: 
+    ports:
       - 3003:3000
     volumes:
       - ./backend/inspections:/node/app
       - /node/app/node_modules
     depends_on:
-      - mongo
+      - mongo1
       - redis_db
   backend-ai-assist:
     profiles: [core, ai, marketing, mobile, inspector, home-owner]
@@ -86,13 +83,13 @@ services:
       - DB_INSPECTORS=inspectors
     networks:
       - dev
-    ports: 
+    ports:
       - 3004:3000
     volumes:
       - ./backend/ai-assist:/node/app
       - /node/app/node_modules
     depends_on:
-      - mongo
+      - mongo1
       - redis_db
   frontend-marketing:
     profiles: [core, marketing]
@@ -104,7 +101,7 @@ services:
       - BACKEND_CORE_URL=https://localhost:3002
     networks:
       - dev
-    ports: 
+    ports:
       - 3000:3000
     volumes:
       - ./frontend/marketing:/node/app
@@ -124,7 +121,7 @@ services:
       - BACKEND_AIASSIST_URL=https://localhost:3004
     networks:
       - dev
-    ports: 
+    ports:
       - 3001:3000
     volumes:
       - ./frontend/platform:/node/app
@@ -144,7 +141,7 @@ services:
       - BACKEND_AIASSIST_URL=https://localhost:3004
     networks:
       - dev
-    ports: 
+    ports:
       - 3005:3000
     volumes:
       - NODE_ENV=development
@@ -178,3 +175,5 @@ services:
 volumes:
     mongodb_data:
     redis_data:
+networks:
+  dev:

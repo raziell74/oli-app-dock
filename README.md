@@ -29,9 +29,10 @@ As of the writing of this document we are using node v19.8.1 for all of our code
    - The script will pull all of the OLI sub-module repositories for the app and initialize each of them by running an `npm install` for each respective repository.
    - This process can take awhile so please wait for it to fully complete.
 3. Launch the docker containers
-   - In a terminal navigate to the `<containing directory>\OLI\dev` directory and run `docker-compose up --build`.
-   - After the first time bringing the containers up you can leave off the '--build' from the command to bring up the containers quicker.
-   - You can also use the `restart.sh` or `start.sh` scripts that are explained lower in this document.
+   - In a terminal navigate to the `<containing directory>\OLI\dev` directory 
+   - For the first time run use this commend: `docker-compose --profile '*' up --build -d`
+   - To stop the containers: `docker-compose stop` 
+   - Use this command to bring containers back up after the intial build `docker-compose --profile '*' up -d`
 4. Accessing the various services from the browser. <sub>_You can add an alias to each by editing your hosts file. [How to edit hosts](https://www.hostinger.com/tutorials/how-to-edit-hosts-file)_</sub>
    - Frontend
      - Marketing site: http://localhost:3000/

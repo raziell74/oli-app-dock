@@ -1,4 +1,4 @@
 # OLI Dev container restart
 
-docker-compose down
+docker-compose --profile '*' stop
 ./start.sh "$@"

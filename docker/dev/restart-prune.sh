@@ -1,6 +1,6 @@
 # OLI Dev container restart
 
-docker-compose down
+docker-compose --profile '*' stop
 docker system prune
 docker volume prune
-docker-compose up --build
+docker-compose "$@" up --build

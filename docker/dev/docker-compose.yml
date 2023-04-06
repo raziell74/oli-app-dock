@@ -2,7 +2,7 @@ version: "3.9"
 services:
 
   mongo1:
-    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, mongo]
+    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, mongo, platform]
     image: mongo:6.0
     container_name: oli-mongo1
     hostname: mongo1
@@ -15,7 +15,7 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
 
   redis_db:
-    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, redis]
+    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, redis, platform]
     image: redis:6.2
     container_name: oli-redis
     networks:
@@ -27,7 +27,7 @@ services:
       - redis_data:/data/redis
 
   backend-core:
-    profiles: [core, marketing, mobile, ai, inspector, home-owner]
+    profiles: [core, marketing, mobile, ai, inspector, home-owner, platform]
     image: core:dev
     container_name: oli-backend-core
     build: ../../backend/core
@@ -42,14 +42,14 @@ services:
     ports:
       - 3002:3000
     volumes:
-      - ./backend/core:/node/app
+      - ../../backend/core:/app
       - /node/app/node_modules
     depends_on:
       - mongo1
       - redis_db
 
   backend-inspections:
-    profiles: [core, ai, mobile, inspector]
+    profiles: [core, ai, mobile, inspector, platform]
     image: inspections:dev
     container_name: oli-backend-inspections
     build: ../../backend/inspections
@@ -64,14 +64,14 @@ services:
     ports:
       - 3003:3000
     volumes:
-      - ./backend/inspections:/node/app
+      - ../../backend/inspections:/app
       - /node/app/node_modules
     depends_on:
       - mongo1
       - redis_db
 
   backend-ai-assist:
-    profiles: [core, ai, marketing, mobile, inspector, home-owner]
+    profiles: [core, ai, marketing, mobile, inspector, home-owner, platform]
     image: ai-assist:dev
     container_name: oli-backend-ai-assist
     build: ../../backend/ai-assist
@@ -90,7 +90,7 @@ services:
     ports:
       - 3004:3000
     volumes:
-      - ./backend/ai-assist:/node/app
+      - ../../backend/ai-assist:/app
       - /node/app/node_modules
     depends_on:
       - mongo1
@@ -100,8 +100,13 @@ services:
     profiles: [core, marketing]
     image: marketing:dev
     container_name: oli-frontend-marketing
-    build: ../../frontend/marketing
+    build:
+      dockerfile: Dockerfile
+      context: ../../frontend/platform
+    stdin_open: true
     environment:
+      - WATCHPACK_POLLING=true
+      - PORT=3000
       - NODE_ENV=development
       - BACKEND_CORE_URL=https://localhost:3002
     networks:
@@ -109,18 +114,23 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - ./frontend/marketing:/node/app
-      - /node/app/node_modules
+      - ../../frontend/marketing:/app
+      - /app/node_modules
     depends_on:
       - backend-core
       - backend-ai-assist
 
   frontend-platform:
-    profiles: [core]
+    profiles: [core, platform]
     image: platform:dev
     container_name: oli-frontend-platform
-    build: ../../frontend/platform
+    build:
+      dockerfile: Dockerfile
+      context: ../../frontend/platform
+    stdin_open: true
     environment:
+      - WATCHPACK_POLLING=true
+      - PORT=3001
       - NODE_ENV=development
       - BACKEND_CORE_URL=https://localhost:3002
       - BACKEND_INSPECTIONS_URL=https://localhost:3003
@@ -128,10 +138,10 @@ services:
     networks:
       - dev
     ports:
-      - 3001:3000
+      - 3001:3001
     volumes:
-      - ./frontend/platform:/node/app
-      - /node/app/node_modules
+      - ../../frontend/platform:/app
+      - /app/node_modules
     depends_on:
       - backend-core
       - backend-inspections
@@ -152,7 +162,7 @@ services:
     ports:
       - 3005:3000
     volumes:
-      - ./mobile/inspector:/node/app
+      - ../../mobile/inspector:/app
       - /node/app/node_modules
     depends_on:
       - backend-core
@@ -174,7 +184,7 @@ services:
     ports:
       - 3006:3000
     volumes:
-      - ./mobile/home-owner:/node/app
+      - ../../mobile/home-owner:/app
       - /node/app/node_modules
     depends_on:
       - backend-core

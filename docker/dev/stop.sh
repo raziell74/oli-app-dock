@@ -1,3 +1,3 @@
 # OLI Dev container stop
 
-docker-compose stop
+docker-compose --profile '*' stop

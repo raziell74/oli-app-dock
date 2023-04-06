@@ -96,6 +96,29 @@ services:
       - mongo1
       - redis_db
 
+  frontend-styleguide:
+    profiles: [core, platform, styleguide]
+    image: styleguide:dev
+    container_name: oli-frontend-styleguide
+    build:
+      dockerfile: StyleGuide.Dockerfile
+      context: ../../frontend/platform
+    stdin_open: true
+    environment:
+      - WATCHPACK_POLLING=true
+      - PORT=6060
+      - NODE_ENV=development
+      - BACKEND_CORE_URL=https://localhost:3002
+      - BACKEND_INSPECTIONS_URL=https://localhost:3003
+      - BACKEND_AIASSIST_URL=https://localhost:3004
+    networks:
+      - dev
+    ports:
+      - 6060:6060
+    volumes:
+      - ../../frontend/platform:/app
+      - /app/node_modules
+
   frontend-marketing:
     profiles: [core, marketing]
     image: marketing:dev
@@ -117,6 +140,7 @@ services:
       - ../../frontend/marketing:/app
       - /app/node_modules
     depends_on:
+      - frontend-styleguide
       - backend-core
       - backend-ai-assist
 
@@ -143,6 +167,7 @@ services:
       - ../../frontend/platform:/app
       - /app/node_modules
     depends_on:
+      - frontend-styleguide
       - backend-core
       - backend-inspections
       - backend-ai-assist

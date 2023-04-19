@@ -18,16 +18,8 @@ $tabDelay = .6
 [System.Windows.Forms.SendKeys]::SendWait("^+%cYellow~^+%iNotebook~")
 
 # [App] HomeOwner
-[System.Windows.Forms.SendKeys]::SendWait("%{LEFT}"); Start-Sleep -s $tabDelay
-[System.Windows.Forms.SendKeys]::SendWait("^+%cBlue~^+%iHome~")
-
-# [BE] Core
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
-[System.Windows.Forms.SendKeys]::SendWait("^+%cCyan~^+%irepo-delete~")
-
-# [FE] Platform
-[System.Windows.Forms.SendKeys]::SendWait("%{LEFT}"); Start-Sleep -s $tabDelay
-[System.Windows.Forms.SendKeys]::SendWait("^+%cGreen~^+%iorganization~")
+[System.Windows.Forms.SendKeys]::SendWait("^+%cBlue~^+%iHome~")
 
 # [BE] AI Assist
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
@@ -36,3 +28,18 @@ $tabDelay = .6
 # [FE] Marketing
 [System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
 [System.Windows.Forms.SendKeys]::SendWait("^+%cGreen~^+%izap~")
+
+# [BE] Core
+[System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cCyan~^+%irepo-delete~")
+
+# [FE] Styleguide
+[System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cYellow~^+%ibeaker~")
+
+# [FE] Platform
+[System.Windows.Forms.SendKeys]::SendWait("^{PGUP}"); Start-Sleep -s $tabDelay
+[System.Windows.Forms.SendKeys]::SendWait("^+%cGreen~^+%iorganization~")
+
+# Split terminal switch action
+# [System.Windows.Forms.SendKeys]::SendWait("%{LEFT}"); Start-Sleep -s $tabDelay

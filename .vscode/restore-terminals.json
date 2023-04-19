@@ -6,6 +6,40 @@
     {
       "splitTerminals": [
         {
+          "name": "[FE] Platform",
+          "commands": [
+            "cd .\\frontend\\platform\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "[FE] Styleguide",
+          "commands": [
+            "cd .\\frontend\\platform\\",
+            "clear",
+            "npm run styleguide"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "[BE] Core",
+          "commands": [
+            "cd .\\backend\\core\\",
+            "clear"
+          ]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
           "name": "[FE] Marketing",
           "commands": [
             "cd .\\frontend\\marketing\\",
@@ -28,16 +62,9 @@
     {
       "splitTerminals": [
         {
-          "name": "[FE] Platform",
+          "name": "[App] HomeOwner",
           "commands": [
-            "cd .\\frontend\\platform\\",
-            "clear"
-          ]
-        },
-        {
-          "name": "[BE] Core",
-          "commands": [
-            "cd .\\backend\\core\\",
+            "cd .\\mobile\\home-owner\\",
             "clear"
           ]
         }
@@ -45,13 +72,6 @@
     },
     {
       "splitTerminals": [
-        {
-          "name": "[App] HomeOwner",
-          "commands": [
-            "cd .\\mobile\\home-owner\\",
-            "clear"
-          ]
-        },
         {
           "name": "[App] Inspector",
           "commands": [

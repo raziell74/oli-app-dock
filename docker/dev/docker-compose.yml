@@ -2,7 +2,7 @@ version: "3.9"
 services:
 
   mongo1:
-    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, mongo, platform]
+    profiles: [db, mongo]
     image: mongo:6.0
     container_name: oli-mongo1
     hostname: mongo1
@@ -15,7 +15,7 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
 
   redis_db:
-    profiles: [core, db, ai, marketing, mobile, inspector, home-owner, redis, platform]
+    profiles: [db, redis]
     image: redis:6.2
     container_name: oli-redis
     networks:
@@ -27,11 +27,12 @@ services:
       - redis_data:/data/redis
 
   backend-core:
-    profiles: [core, marketing, mobile, ai, inspector, home-owner, platform]
+    profiles: [core, platform]
     image: core:dev
     container_name: oli-backend-core
     build: ../../backend/core
     environment:
+      - PORT=3002
       - NODE_ENV=development
       - COREDB_URL=mongodb://mongo1/
       - DB_CORE=core
@@ -40,20 +41,21 @@ services:
     networks:
       - dev
     ports:
-      - 3002:3000
+      - 3002:3002
     volumes:
       - ../../backend/core:/app
-      - /node/app/node_modules
+      - /app/node_modules
     depends_on:
       - mongo1
       - redis_db
 
   backend-inspections:
-    profiles: [core, ai, mobile, inspector, platform]
+    profiles: [inspector, platform]
     image: inspections:dev
     container_name: oli-backend-inspections
     build: ../../backend/inspections
     environment:
+      - PORT=3003
       - NODE_ENV=development
       - COREDB_URL=mongodb://mongo1/
       - DB_CORE=core
@@ -62,16 +64,16 @@ services:
     networks:
       - dev
     ports:
-      - 3003:3000
+      - 3003:3003
     volumes:
       - ../../backend/inspections:/app
-      - /node/app/node_modules
+      - /app/node_modules
     depends_on:
       - mongo1
       - redis_db
 
   backend-ai-assist:
-    profiles: [core, ai, marketing, mobile, inspector, home-owner, platform]
+    profiles: [ai]
     image: ai-assist:dev
     container_name: oli-backend-ai-assist
     build: ../../backend/ai-assist
@@ -91,36 +93,13 @@ services:
       - 3004:3000
     volumes:
       - ../../backend/ai-assist:/app
-      - /node/app/node_modules
+      - /app/node_modules
     depends_on:
       - mongo1
       - redis_db
 
-  frontend-styleguide:
-    profiles: [core, platform, styleguide]
-    image: styleguide:dev
-    container_name: oli-frontend-styleguide
-    build:
-      dockerfile: StyleGuide.Dockerfile
-      context: ../../frontend/platform
-    stdin_open: true
-    environment:
-      - WATCHPACK_POLLING=true
-      - PORT=6060
-      - NODE_ENV=development
-      - BACKEND_CORE_URL=https://localhost:3002
-      - BACKEND_INSPECTIONS_URL=https://localhost:3003
-      - BACKEND_AIASSIST_URL=https://localhost:3004
-    networks:
-      - dev
-    ports:
-      - 6060:6060
-    volumes:
-      - ../../frontend/platform:/app
-      - /app/node_modules
-
   frontend-marketing:
-    profiles: [core, marketing]
+    profiles: [marketing]
     image: marketing:dev
     container_name: oli-frontend-marketing
     build:
@@ -140,12 +119,11 @@ services:
       - ../../frontend/marketing:/app
       - /app/node_modules
     depends_on:
-      - frontend-styleguide
       - backend-core
       - backend-ai-assist
 
   frontend-platform:
-    profiles: [core, platform]
+    profiles: [platform]
     image: platform:dev
     container_name: oli-frontend-platform
     build:
@@ -167,7 +145,6 @@ services:
       - ../../frontend/platform:/app
       - /app/node_modules
     depends_on:
-      - frontend-styleguide
       - backend-core
       - backend-inspections
       - backend-ai-assist
@@ -188,7 +165,7 @@ services:
       - 3005:3000
     volumes:
       - ../../mobile/inspector:/app
-      - /node/app/node_modules
+      - /app/node_modules
     depends_on:
       - backend-core
       - backend-inspections
@@ -210,7 +187,7 @@ services:
       - 3006:3000
     volumes:
       - ../../mobile/home-owner:/app
-      - /node/app/node_modules
+      - /app/node_modules
     depends_on:
       - backend-core
       - backend-inspections

@@ -1,0 +1,23 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Oli-API",
+    "dateExported": "2023-04-20T15:23:41.479Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "c8dfeb27-3e51-48dc-ae83-dc5dca9faee0",
+            "name": "Core",
+            "containerId": "",
+            "created": "2023-04-20T15:21:46.483Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "8c3a6216-e52b-499e-95c4-8820946edd54",
+            "name": "User",
+            "containerId": "c8dfeb27-3e51-48dc-ae83-dc5dca9faee0",
+            "created": "2023-04-20T15:23:22.433Z",
+            "sortNum": 20000
+        }
+    ],
+    "requests": []
+}

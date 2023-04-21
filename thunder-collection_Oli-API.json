@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "Oli-API",
-    "dateExported": "2023-04-20T15:23:41.479Z",
+    "dateExported": "2023-04-21T16:57:49.685Z",
     "version": "1.1",
     "folders": [
         {
@@ -12,12 +12,430 @@
             "sortNum": 10000
         },
         {
+            "_id": "6af65276-b31b-44a8-99bd-8b5c76ec86d0",
+            "name": "Auth",
+            "containerId": "c8dfeb27-3e51-48dc-ae83-dc5dca9faee0",
+            "created": "2023-04-21T04:51:40.257Z",
+            "sortNum": 10000
+        },
+        {
             "_id": "8c3a6216-e52b-499e-95c4-8820946edd54",
             "name": "User",
             "containerId": "c8dfeb27-3e51-48dc-ae83-dc5dca9faee0",
             "created": "2023-04-20T15:23:22.433Z",
             "sortNum": 20000
+        },
+        {
+            "_id": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "query",
+            "containerId": "8c3a6216-e52b-499e-95c4-8820946edd54",
+            "created": "2023-04-21T16:28:55.859Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "65f7970f-fb12-4360-94b0-450872138a6c",
+            "name": "mutation",
+            "containerId": "8c3a6216-e52b-499e-95c4-8820946edd54",
+            "created": "2023-04-21T16:29:20.797Z",
+            "sortNum": 40000
         }
     ],
-    "requests": []
+    "requests": [
+        {
+            "_id": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "6af65276-b31b-44a8-99bd-8b5c76ec86d0",
+            "name": "authenticate",
+            "url": "{{core-url}}/authenticate",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-04-20T15:45:57.671Z",
+            "modified": "2023-04-21T04:51:46.845Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"olidev\"\n}",
+                "form": []
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.token",
+                    "action": "setto",
+                    "value": "{{core-jwt}}"
+                }
+            ]
+        },
+        {
+            "_id": "69ca33b2-dde5-429d-a5f3-473d579b49a2",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "users",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-04-21T05:59:43.564Z",
+            "modified": "2023-04-21T16:28:58.678Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n    users {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-mins",
+                        "triggerValue": "60"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "77ceff82-a8b4-42c2-a3b4-40d0599a73ee",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "65f7970f-fb12-4360-94b0-450872138a6c",
+            "name": "createUser",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-04-21T16:29:26.881Z",
+            "modified": "2023-04-21T16:34:38.028Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation (\n    $username: String!, \n    $password: String!, \n    $firstName: String!, \n    $lastName: String!, \n    $email: String!, \n    $roles: [String!]!\n){\n    createUser(\n        username: $username,\n        password: $password,\n        firstName: $firstName,\n        lastName: $lastName,\n        email: $email,\n        roles: $roles,\n    ) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"username\": \"test\",\n  \"password\": \"test\",\n  \"firstName\": \"test\",\n  \"lastName\": \"test\",\n  \"email\": \"test@test.com\",\n  \"roles\": [ \"guest\" ]\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-mins",
+                        "triggerValue": "60"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "6636471d-7ef0-413f-9afa-8f1fd52de875",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "6af65276-b31b-44a8-99bd-8b5c76ec86d0",
+            "name": "sessionStatus",
+            "url": "{{core-url}}/session-status",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-04-20T19:39:13.460Z",
+            "modified": "2023-04-21T04:51:48.777Z",
+            "headers": [],
+            "params": [],
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": []
+        },
+        {
+            "_id": "99e912f3-23af-47b5-983c-b6bb5bff36d3",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "userById",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-04-21T06:04:04.456Z",
+            "modified": "2023-04-21T16:56:31.406Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query userById($_id: ID){\n    users(input: { _id: $_id }) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"_id\": \"{{core-admin-user-id}}\"\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "05291099-7d4a-4100-90e7-76008bdeef1e",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "c5dac258-52de-40fc-b692-00df06846a9b",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "65f7970f-fb12-4360-94b0-450872138a6c",
+            "name": "updateUser",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-04-21T16:35:17.215Z",
+            "modified": "2023-04-21T16:56:41.514Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation (\n    $_id: ID!,\n    $updateData: UpdateUserData\n){\n    updateUser(\n        _id: $_id,\n        updateData: $updateData\n    ) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}\n",
+                    "variables": "{\n  \"_id\": \"{{core-test-user-id}}\",\n  \"updateData\": {\n    \"firstName\": \"John\",\n    \"lastName\": \"Test\",\n    \"password\": \"1234\",\n    \"email\": \"john.test@test.com\",\n    \"roles\": [ \"guest\", \"property-ower\" ]\n  }\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "96865fe8-254e-4b4d-ab99-d61605eb9771",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "05291099-7d4a-4100-90e7-76008bdeef1e",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "userByUsername",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-04-21T06:16:52.574Z",
+            "modified": "2023-04-21T16:39:53.445Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query userByUsername($username: String){\n    users(input: { username: $username }) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"username\": \"admin\"\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.data.users._id",
+                    "action": "setto",
+                    "value": "{{core-admin-user-id}}"
+                }
+            ],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-mins",
+                        "triggerValue": "60"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "9ab7100e-c8ef-4846-850a-e7ceba9ee7c4",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "65f7970f-fb12-4360-94b0-450872138a6c",
+            "name": "deleteUser",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-04-21T16:49:45.921Z",
+            "modified": "2023-04-21T16:50:25.474Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation ( $_id: ID! ){\n    deleteUser( _id: $_id ) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"_id\": \"{{core-test-user-id}}\"\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-mins",
+                        "triggerValue": "60"
+                    },
+                    {
+                        "reqId": "96865fe8-254e-4b4d-ab99-d61605eb9771",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "6fe682af-9cdf-4ccf-b315-5c4c1c5f2a7a",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "userByEmail",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-04-21T06:18:14.569Z",
+            "modified": "2023-04-21T16:29:15.773Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query userByEmail($email: String){\n    users(input: { email: $email }) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"email\": \"admin@oli.com\"\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-mins",
+                        "triggerValue": "60"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "83945887-5b01-4da4-b362-b19a17798f1d",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "userByRole",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2023-04-21T06:18:18.407Z",
+            "modified": "2023-04-21T16:29:16.751Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query userByUsername($role: String){\n    users(input: { roles: $role }) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"role\": \"inspector\"\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "e56da3fa-730c-4b71-b64a-93102d8b8dec",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-mins",
+                        "triggerValue": "60"
+                    }
+                ]
+            }
+        },
+        {
+            "_id": "96865fe8-254e-4b4d-ab99-d61605eb9771",
+            "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+            "containerId": "ec9de788-0dbe-41d4-ab52-ee3f18ced9a5",
+            "name": "getTestUser",
+            "url": "{{core-url}}/graphql",
+            "method": "POST",
+            "sortNum": 65000,
+            "created": "2023-04-21T16:41:59.768Z",
+            "modified": "2023-04-21T16:52:05.047Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query userByUsername($username: String){\n    users(input: { username: $username }) {\n        _id\n        username\n        email\n        firstName\n        lastName\n        roles\n    }\n}",
+                    "variables": "{\n  \"username\": \"test\"\n}"
+                }
+            },
+            "auth": {
+                "type": "bearer",
+                "bearer": "{{core-jwt}}"
+            },
+            "tests": [
+                {
+                    "type": "set-env-var",
+                    "custom": "json.data.users._id",
+                    "action": "setto",
+                    "value": "{{core-test-user-id}}"
+                }
+            ],
+            "preReq": {
+                "runRequests": [
+                    {
+                        "reqId": "77ceff82-a8b4-42c2-a3b4-40d0599a73ee",
+                        "colId": "496c222a-ef67-4abe-84f1-7f1350e321b2",
+                        "triggerCondition": "run-always",
+                        "triggerValue": ""
+                    }
+                ]
+            }
+        }
+    ]
 }

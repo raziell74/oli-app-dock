@@ -1,7 +1,24 @@
 {
     "client": "Thunder Client",
     "environmentName": "Oli-Env",
-    "dateExported": "2023-04-20T15:23:30.755Z",
+    "dateExported": "2023-04-21T16:58:00.979Z",
     "version": "1.0",
-    "variables": []
+    "variables": [
+        {
+            "name": "core-url",
+            "value": "http://localhost:3002"
+        },
+        {
+            "name": "core-jwt",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDQxOTM4NGNiMDA0ZTQwMmU5NzQ1MTAiLCJpYXQiOjE2ODIwOTU4NDIsImV4cCI6MTY4MjExMDI0Mn0._LrqGbW-PzSwtFviLcYgK004TAYvdyIg28QtDA9etd8"
+        },
+        {
+            "name": "core-admin-user-id",
+            "value": "64419384cb004e402e974510"
+        },
+        {
+            "name": "core-test-user-id",
+            "value": "6442bffb7129565a30f82b14"
+        }
+    ]
 }

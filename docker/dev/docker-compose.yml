@@ -38,6 +38,7 @@ services:
       - DB_CORE=core
       - DB_REPORTS=reports
       - DB_INSPECTORS=inspectors
+      - DEV_PASS=olidev
     networks:
       - dev
     ports:

@@ -1,4 +1,4 @@
-// Core Platform DB  
+// Core Platform DB
 coredb = db.getSiblingDB('core');
 coredb.createUser({
   user: 'core-user',
@@ -10,31 +10,35 @@ coredb.createUser({
 coredb.users.insert([
   {
     username: 'admin',
-    name: 'Admin',
+    firstName: 'System',
+    lastName: 'Admin',
     email: 'admin@oli.com',
-    password: 'olidev2000!',
-    role: ['admin', 'inspector', 'home_owner']
+    password: 'change-me',
+    roles: ['admin', 'inspector', 'property-owner']
   },
   {
     username: 'inspector',
-    name: 'Bill WallInspector',
+    firstName: 'Bill',
+    lastName: 'WallInspector',
     email: 'inspector@oli.com',
-    password: 'olidev2000!',
-    role: ['inspector']
+    password: 'change-me',
+    roles: ['inspector']
   },
   {
     username: 'homeowner',
-    name: 'Jordan McHomeOwner',
+    firstName: 'Jordan',
+    lastName: 'McHomeOwner',
     email: 'homeowner@oli.com',
-    password: 'olidev2000!',
-    role: ['home_owner']
+    password: 'change-me',
+    roles: ['property-owner']
   },
   {
     username: 'guest',
-    name: 'Bubbles McFluffernutter',
+    firstName: 'Bubbles',
+    lastName: 'McFluffernutter',
     email: 'guest@oli.com',
-    password: 'olidev2000!',
-    role: ['guest']
+    password: 'change-me',
+    roles: ['guest']
   },
 ]);
 
@@ -46,7 +50,7 @@ inspectorsdb.createUser({
   roles: [{ role: 'readWrite', db: 'inspectors' }],
 });
 
-// Create companies collection that holds a list of inspection companies 
+// Create companies collection that holds a list of inspection companies
 var inspectionUser = coredb.users.findOne({ username: 'inspector' });
 inspectorsdb.companies.insert([
   {
